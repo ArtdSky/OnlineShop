@@ -1,6 +1,8 @@
 package com.example.onlineshop.presentation.screens
 
 import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -8,6 +10,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -46,6 +51,7 @@ fun SignInPage() {
                     Text(
                         text = "Sign In",
                         fontFamily = FontFamily(Font(R.font.montserrat, FontWeight.Bold)),
+                        fontWeight = FontWeight.W600,
                         fontSize = 26.sp,
                         letterSpacing = (-0.3).sp,
                         lineHeight = 31.69.sp,
@@ -187,11 +193,34 @@ fun SignInPage() {
                                 color = Color(0xFFEAEAEA)
                             )
                         }
+                        Spacer(modifier = Modifier.height(15.dp))
                         Row(
-
+                            horizontalArrangement = Arrangement.Start
                         ) {
-                            Text("Already have an account?")
-                            Text("Log in")
+                            Text(
+                                text = "Already have an account?",
+                                fontFamily = FontFamily(Font(R.font.montserrat, FontWeight.Normal)),
+                                fontWeight = FontWeight.W500,
+                                fontSize = 10.sp,
+                                lineHeight = (12.19).sp,
+                                letterSpacing = (-0.3).sp,
+                                color = Color(0xFF808080),
+                                modifier = Modifier.clickable {
+                                    Log.d("TAG-SignInPage", "Clicked: Already have an account")
+                                }
+                            )
+                            Text(
+                                text = "Log in",
+                                fontFamily = FontFamily(Font(R.font.montserrat, FontWeight.Normal)),
+                                fontWeight = FontWeight.W500,
+                                fontSize = 10.sp,
+                                lineHeight = (12.19).sp,
+                                letterSpacing = (-0.3).sp,
+                                color = Color(0xFF254FE6),
+                                modifier = Modifier.clickable {
+                                    Log.d("TAG-SignInPage", "Clicked: Log in")
+                                }
+                            )
                         }
                     }
                 }
@@ -199,12 +228,54 @@ fun SignInPage() {
                     modifier = Modifier
                         .padding(top = 50.dp)
                 ) {
-                    Column() {
-                        Row {
-                            Text("Sign in with Google")
+                    Column(
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_google),
+                                contentDescription = "SVG image",
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Spacer(modifier = Modifier.width(13.dp))
+                            Text(
+                                text ="Sign in with Google",
+                                fontFamily = FontFamily(Font(R.font.montserrat, FontWeight.Normal)),
+                                fontWeight = FontWeight.W500,
+                                fontSize = 12.sp,
+                                lineHeight = (14.63).sp,
+                                letterSpacing = (-0.3).sp,
+                                color = Color(0xFF000000),
+                                modifier = Modifier.clickable {
+                                    Log.d("TAG-SignInPage", "Clicked: Sign in with Google")
+                                })
                         }
-                        Row {
-                            Text("Sign in with Apple")
+                        Spacer(modifier = Modifier.height(34.dp))
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_apple),
+                                contentDescription = "SVG image",
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Spacer(modifier = Modifier.width(13.dp))
+                            Text(
+                                text = "Sign in with Apple",
+                                fontFamily = FontFamily(Font(R.font.montserrat, FontWeight.Normal)),
+                                fontWeight = FontWeight.W500,
+                                fontSize = 12.sp,
+                                lineHeight = (14.63).sp,
+                                letterSpacing = (-0.3).sp,
+                                color = Color(0xFF000000),
+                                modifier = Modifier.clickable {
+                                    Log.d("TAG-SignInPage", "Clicked: Sign in with Apple")
+                                }
+                            )
                         }
 
                     }
