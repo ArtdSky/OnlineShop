@@ -100,6 +100,7 @@ fun SignInPage() {
                         },
                         colors = TextFieldDefaults.textFieldColors(
                             unfocusedIndicatorColor = Color.Transparent,
+                            backgroundColor = Color(0xFFE8E8E8)
                         ),
                         textStyle = textStyle
                     )
@@ -128,6 +129,7 @@ fun SignInPage() {
                         },
                         colors = TextFieldDefaults.textFieldColors(
                             unfocusedIndicatorColor = Color.Transparent,
+                            backgroundColor = Color(0xFFE8E8E8)
                         ),
                         textStyle = textStyle
                     )
@@ -156,6 +158,7 @@ fun SignInPage() {
                         },
                         colors = TextFieldDefaults.textFieldColors(
                             unfocusedIndicatorColor = Color.Transparent,
+                            backgroundColor = Color(0xFFE8E8E8)
                         ),
                         textStyle = textStyle
                     )
