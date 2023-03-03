@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.onlineshop.presentation.screens.Login
+import com.example.onlineshop.presentation.screens.Page1
 import com.example.onlineshop.presentation.screens.Profile
 import com.example.onlineshop.ui.theme.OnlineShopTheme
 
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             OnlineShopTheme {
                 // A surface container using the 'background' color from the theme
-                Profile()
+                Page1()
             }
         }
     }
