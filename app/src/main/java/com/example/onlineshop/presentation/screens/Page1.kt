@@ -1,20 +1,19 @@
 package com.example.onlineshop.presentation.screens
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -26,7 +25,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.onlineshop.R
+import com.example.onlineshop.domain.models.FlashSale
+import com.example.onlineshop.domain.models.Latest
 import com.example.onlineshop.presentation.utils.BottomItems
 
 @Composable
@@ -36,6 +39,52 @@ fun Page1() {
 //            .verticalScroll(rememberScrollState())
             .fillMaxSize()
     ) {
+        var searchText by remember { mutableStateOf("") }
+
+        val brands = List(3) { index -> "Rectangle ${index + 1}" }
+        val flashSales = listOf<FlashSale>(
+            FlashSale(
+                category = "Kids",
+                name = "New Balance Sneakers",
+                price = 22.5,
+                discount = (30).toDouble(),
+                image_url = "https://newbalance.ru/upload/iblock/697/iz997hht_nb_02_i.jpg"
+            ),
+            FlashSale(
+                category = "Kids",
+                name = "Reebok Classic",
+                price = (24).toDouble(),
+                discount = (30).toDouble(),
+                image_url = "https://assets.reebok.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/3613ebaf6ed24a609818ac63000250a3_9366/Classic_Leather_Shoes_-_Toddler_White_FZ2093_01_standard.jpg"
+            )
+        )
+        val latest = listOf<Latest>(
+            Latest(
+                category = "Phones",
+                name = "Samsung S10",
+                price = (1000).toDouble(),
+                image_url = "https://www.dhresource.com/0x0/f2/albu/g8/M01/9D/19/rBVaV1079WeAEW-AAARn9m_Dmh0487.jpg"
+            ),
+            Latest(
+                category = "Games",
+                name = "Sony Playstation 5",
+                price = (700).toDouble(),
+                image_url = "https://avatars.mds.yandex.net/get-mpic/6251774/img_id4273297770790914968.jpeg/orig"
+            ),
+            Latest(
+                category = "Games",
+                name = "Xbox ONE",
+                price = (500).toDouble(),
+                image_url = "https://www.tradeinn.com/f/13754/137546834/microsoft-xbox-xbox-one-s-1tb-console-additional-controller.jpg"
+            ),
+            Latest(
+                category = "Cars",
+                name = "BMW X6M",
+                price = (35000).toDouble(),
+                image_url = "https://mirbmw.ru/wp-content/uploads/2022/01/manhart-mhx6-700-01.jpg"
+            ),
+        )
+
 
 
         Column(
@@ -48,10 +97,6 @@ fun Page1() {
 
 
         ) {
-            val brands = List(3) { index -> "Rectangle ${index + 1}" }
-            val flashSales = List(2) { index -> "Rectangle ${index + 1}" }
-            val latest = List(3) { index -> "Rectangle ${index + 1}" }
-            var searchText by remember { mutableStateOf("") }
 
 
 /////////////Top-bar
@@ -409,15 +454,107 @@ fun Page1() {
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                items(latest.size) { lates ->
-                    Box(
+                items(latest.size) {
+                    Card(
                         modifier = Modifier
                             .width(114.dp)
                             .height(149.dp)
                             .clip(RoundedCornerShape(9.dp))
                             .background(Color.Black)
-                    )
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(latest[it].image_url)
+                                    .build(),
+                                contentDescription = latest[it].name,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .clickable(onClick = {
+                                        Log.d("TAG-page1", "${latest[it].name} CLICKED")
+                                    })
+                                    .align(Alignment.CenterStart)
+                                    .fillMaxSize(),
+                            )
+                            Column(
+                                verticalArrangement = Arrangement.Bottom,
+                                horizontalAlignment = Alignment.Start,
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .width(75.dp)
+                                    .padding(start = 7.dp)
+                            ) {
+                                Text(
+                                    text = latest[it].category,
+                                    fontFamily = FontFamily(Font(R.font.poppins)),
+                                    fontWeight = FontWeight.W600,
+                                    fontSize = 6.sp,
+                                    letterSpacing = (-0.3).sp,
+                                    lineHeight = (9).sp,
+                                    color = Color(0xFF070604),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(9.dp))
+                                        .width(35.dp)
+                                        .height(12.dp)
+                                        .background(Color(0xFFc4c4c4))
+                                )
+                                Text(
+                                    text = latest[it].name,
+                                    fontFamily = FontFamily(Font(R.font.poppins)),
+                                    fontWeight = FontWeight.W600,
+                                    fontSize = 9.sp,
+                                    letterSpacing = (-0.3).sp,
+                                    lineHeight = (13.5).sp,
+                                    color = Color(0xFFFFFFFF),
+                                    modifier = Modifier.padding(top = 4.dp)
+                                )
+                                Text(
+                                    text = "$ ${latest[it].price}",
+                                    fontFamily = FontFamily(Font(R.font.poppins)),
+                                    fontWeight = FontWeight.W600,
+                                    fontSize = 10.sp,
+                                    letterSpacing = (-0.3).sp,
+                                    lineHeight = (19.5).sp,
+                                    color = Color(0xFFFFFFFF),
+                                    modifier = Modifier.padding(top = 2.dp)
+                                )
+                            }
+                            Row(
+                                verticalAlignment = Alignment.Bottom,
+                                horizontalArrangement = Arrangement.End,
+                                modifier = Modifier
+                                    .padding(bottom = 7.dp, end = 4.dp)
+                                    .fillMaxSize()
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                        .clip(CircleShape)
+                                        .background(Color(0xFFEEEFF4))
+                                        .clickable(onClick = {
+                                            Log.d(
+                                                "TAG-page1",
+                                                "${latest[it].name} ADD CLICKED"
+                                            )
+                                        })
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.add),
+                                        contentDescription = "add",
+                                        contentScale = ContentScale.Fit,
+                                        modifier = Modifier
+                                            .size(10.dp)
+                                            .align(Alignment.Center)
 
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
@@ -453,18 +590,161 @@ fun Page1() {
                 horizontalArrangement = Arrangement.spacedBy(9.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                items(flashSales.size) { flashSale ->
-                    Box(
+                items(flashSales.size) {
+                    Card(
+                        shape = RoundedCornerShape(11.dp),
                         modifier = Modifier
                             .width(174.dp)
                             .height(221.dp)
-                            .clip(RoundedCornerShape(11.dp))
-                            .background(Color.Black)
+
                     ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(flashSales[it].image_url)
+                                    .build(),
+                                contentDescription = flashSales[it].name,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .clickable(onClick = {
+                                        Log.d("TAG-page1", "${flashSales[it].name} CLICKED")
+                                    })
+                                    .align(Alignment.CenterStart)
+                                    .fillMaxSize(),
+                            )
+                            Row(
+                                verticalAlignment = Alignment.Top,
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(7.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.black_cat),
+                                    contentDescription = "Seller",
+                                    modifier = Modifier
+                                        .size(25.dp)
+                                        .clip(CircleShape)
+                                )
 
+                                Text(
+                                    text = "${flashSales[it].discount}% off",
+                                    fontFamily = FontFamily(Font(R.font.poppins)),
+                                    fontWeight = FontWeight.W600,
+                                    fontSize = 10.sp,
+                                    letterSpacing = (-0.3).sp,
+                                    lineHeight = (15).sp,
+                                    color = Color(0xFFFFFFFF),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(9.dp))
+                                        .width(49.dp)
+                                        .height(18.dp)
+                                        .background(Color(0xFFF93A3A))
+                                )
+                            }
+                            Column(
+                                verticalArrangement = Arrangement.Bottom,
+                                horizontalAlignment = Alignment.Start,
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .width(87.dp)
+                                    .padding(start = 10.dp)
+                            ) {
+                                Text(
+                                    text = flashSales[it].category,
+                                    fontFamily = FontFamily(Font(R.font.poppins)),
+                                    fontWeight = FontWeight.W600,
+                                    fontSize = 9.sp,
+                                    letterSpacing = (-0.3).sp,
+                                    lineHeight = (13.5).sp,
+                                    color = Color(0xFF070604),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(9.dp))
+                                        .width(49.dp)
+                                        .height(17.dp)
+                                        .background(Color(0xFFc4c4c4))
+                                )
+                                Text(
+                                    text = flashSales[it].name,
+                                    fontFamily = FontFamily(Font(R.font.poppins)),
+                                    fontWeight = FontWeight.W600,
+                                    fontSize = 13.sp,
+                                    letterSpacing = (-0.3).sp,
+                                    lineHeight = (19.5).sp,
+                                    color = Color(0xFFFFFFFF),
+                                    modifier = Modifier.padding(top = 6.dp)
+                                )
+                                Text(
+                                    text = "$ ${flashSales[it].price}",
+                                    fontFamily = FontFamily(Font(R.font.poppins)),
+                                    fontWeight = FontWeight.W600,
+                                    fontSize = 10.sp,
+                                    letterSpacing = (-0.3).sp,
+                                    lineHeight = (19.5).sp,
+                                    color = Color(0xFFFFFFFF),
+                                    modifier = Modifier.padding(top = 12.dp)
+                                )
+                            }
+                            Row(
+                                verticalAlignment = Alignment.Bottom,
+                                horizontalArrangement = Arrangement.End,
+                                modifier = Modifier
+                                    .padding(bottom = 7.dp, end = 4.dp)
+                                    .fillMaxSize()
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(28.dp)
+                                        .clip(CircleShape)
+                                        .background(Color(0xFFEEEFF4))
+                                        .clickable(onClick = {
+                                            Log.d(
+                                                "TAG-page1",
+                                                "${flashSales[it].name} LIKE CLICKED"
+                                            )
+                                        })
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.favorites),
+                                        contentDescription = "like",
+                                        contentScale = ContentScale.Fit,
+                                        modifier = Modifier
+                                            .size(10.dp)
+                                            .align(Alignment.Center)
+                                    )
+                                }
+                                Box(
+                                    modifier = Modifier
+                                        .size(35.dp)
+                                        .clip(CircleShape)
+                                        .background(Color(0xFFEEEFF4))
+                                        .padding(4.dp)
+                                        .clickable(onClick = {
+                                            Log.d(
+                                                "TAG-page1",
+                                                "${flashSales[it].name} ADD CLICKED"
+                                            )
+                                        })
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.add),
+                                        contentDescription = "Profile Image",
+                                        contentScale = ContentScale.Fit,
+                                        modifier = Modifier
+                                            .size(13.dp)
+                                            .align(Alignment.Center)
+                                    )
+                                }
+                            }
+                        }
                     }
-
                 }
+
 
             }
 ////////////Brands
