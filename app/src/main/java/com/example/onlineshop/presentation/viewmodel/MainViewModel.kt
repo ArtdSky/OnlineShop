@@ -1,7 +1,10 @@
 package com.example.onlineshop.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.onlineshop.data.network.Api.retrofitApiService
+import com.example.onlineshop.data.network.models.FlashSaleData
 import com.example.onlineshop.presentation.models.FlashSale
 import com.example.onlineshop.presentation.models.Latest
 import com.example.onlineshop.presentation.state.ViewState
@@ -12,7 +15,6 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
     init {
-
     }
 
     private val _viewState = MutableStateFlow(
@@ -20,7 +22,7 @@ class MainViewModel : ViewModel() {
     )
     val viewState = _viewState.asStateFlow()
 
-   fun getData() {
+    fun getData() {
         viewModelScope.launch {
             _viewState.update { currentState ->
                 currentState.copy(
@@ -69,5 +71,34 @@ class MainViewModel : ViewModel() {
                 )
             }
         }
+    }
+
+    fun getNetData() {
+        viewModelScope.launch {
+            val result = retrofitApiService.getFlashSales()
+            Log.d("TAG-VM", result.toString())
+            val flashSales = mapToPresentation(result)
+
+            _viewState.update { currentState ->
+                currentState.copy(
+                    flashSales = flashSales
+                )
+            }
+        }
+    }
+
+    fun mapToPresentation(flashSalesData: FlashSaleData): List<FlashSale> {
+        val listFlashSales: MutableList<FlashSale> = mutableListOf()
+        flashSalesData.flashSale.forEach { flashSale ->
+            val presentationFlashSale = FlashSale(
+                flashSale.category,
+                flashSale.name,
+                flashSale.price,
+                flashSale.discount?.toDouble(),
+                flashSale.imageUrl
+            )
+            listFlashSales.add(presentationFlashSale)
+        }
+        return listFlashSales
     }
 }

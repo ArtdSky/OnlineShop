@@ -6,6 +6,7 @@ import org.koin.dsl.module
 
 val DependencyInjection = module{
 
+    factory {  }
 
     viewModel { MainViewModel() }
 
