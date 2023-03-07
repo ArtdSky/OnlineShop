@@ -1,10 +1,13 @@
 package com.example.onlineshop.presentation.screens
 
 import android.util.Log
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -25,7 +28,6 @@ import androidx.navigation.NavHostController
 import com.example.onlineshop.R
 import com.example.onlineshop.presentation.navigation.AppDestination
 import com.example.onlineshop.presentation.navigation.Page1Screen
-import com.example.onlineshop.presentation.navigation.ProfileScreen
 import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
 import com.example.onlineshop.presentation.screens.components.BottomItems
 import com.example.onlineshop.presentation.viewmodel.MainViewModel

@@ -1,4 +1,4 @@
-package com.example.onlineshop.domain.models
+package com.example.onlineshop.presentation.models
 
 data class Latest(
     val category: String,
