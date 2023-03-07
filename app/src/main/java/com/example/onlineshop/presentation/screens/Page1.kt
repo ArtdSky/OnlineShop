@@ -25,15 +25,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.onlineshop.R
 import com.example.onlineshop.domain.models.FlashSale
 import com.example.onlineshop.domain.models.Latest
-import com.example.onlineshop.presentation.utils.BottomItems
+import com.example.onlineshop.presentation.navigation.AppDestination
+import com.example.onlineshop.presentation.screens.components.BottomItems
 
 @Composable
-fun Page1() {
+fun Page1(
+    navController: NavHostController,
+    currentScreen: AppDestination,
+) {
     Box(
         modifier = Modifier
 //            .verticalScroll(rememberScrollState())
@@ -798,7 +803,10 @@ fun Page1() {
                 .align(Alignment.BottomCenter)
                 .height(63.dp)
         ) {
-            BottomItems()
+            BottomItems(
+                navController = navController,
+                currentScreen = currentScreen,
+            )
         }
     }
 }

@@ -10,9 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -20,11 +18,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.onlineshop.R
+import com.example.onlineshop.presentation.navigation.AppDestination
+import com.example.onlineshop.presentation.navigation.LoginScreen
+import com.example.onlineshop.presentation.navigation.Page1Screen
+import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
 
 
 @Composable
-fun SignInPage() {
+fun SignInPage(
+    navController: NavHostController,
+    currentScreen: AppDestination,
+) {
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.fillMaxSize()
@@ -180,7 +186,10 @@ fun SignInPage() {
                                 contentColor = Color.White
                             ),
                             shape = RoundedCornerShape(15.dp),
-                            onClick = { Log.d("TAG-SignIn", "button clicked") }
+                            onClick = {
+                                Log.d("TAG-SignIn", "button clicked")
+                                navController.navigateSingleTopTo(Page1Screen.route)
+                            }
                         ) {
                             Text(
                                 modifier = Modifier
@@ -212,6 +221,7 @@ fun SignInPage() {
                                     Log.d("TAG-SignInPage", "Clicked: Already have an account")
                                 }
                             )
+                            Spacer(modifier = Modifier.width(10.dp))
                             Text(
                                 text = "Log in",
                                 fontFamily = FontFamily(Font(R.font.montserrat, FontWeight.Normal)),
@@ -222,6 +232,8 @@ fun SignInPage() {
                                 color = Color(0xFF254FE6),
                                 modifier = Modifier.clickable {
                                     Log.d("TAG-SignInPage", "Clicked: Log in")
+                                    navController.navigateSingleTopTo(LoginScreen.route)
+
                                 }
                             )
                         }

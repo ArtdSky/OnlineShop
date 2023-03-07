@@ -1,7 +1,9 @@
-package com.example.onlineshop.presentation.utils
+package com.example.onlineshop.presentation.screens.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -12,11 +14,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.onlineshop.R
+import com.example.onlineshop.presentation.navigation.AppDestination
+import com.example.onlineshop.presentation.navigation.Page1Screen
+import com.example.onlineshop.presentation.navigation.ProfileScreen
+import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
 
 @Composable
 fun BottomItems(
-    modifier: Modifier = Modifier
+    navController: NavHostController,
+    currentScreen: AppDestination,
 ) {
     Row(
         modifier = Modifier
@@ -29,9 +37,18 @@ fun BottomItems(
 
         Box(
             modifier = Modifier
+                .let {
+                    if (currentScreen.route == Page1Screen.route) {
+                        Modifier
+                            .clip(CircleShape)
+                            .background(Color(0xFFEEEFF4))
+                    } else {
+                        it
+                    }
+                }
                 .size(50.dp)
-                .clip(CircleShape)
                 .align(Alignment.CenterVertically)
+
         ) {
             Image(
                 painter = painterResource(id = R.drawable.home),
@@ -40,6 +57,13 @@ fun BottomItems(
                 modifier = Modifier
                     .size(20.dp)
                     .align(Alignment.Center)
+                    .clickable(onClick = {
+                        Log.d(
+                            "TAG-Bottom-Nav",
+                            "${currentScreen.route}  CLICKED"
+                        )
+                        navController.navigateSingleTopTo(Page1Screen.route)
+                    })
             )
         }
         Box(
@@ -89,10 +113,18 @@ fun BottomItems(
         }
         Box(
             modifier = Modifier
+                .let {
+                    if (currentScreen.route == ProfileScreen.route) {
+                        Modifier
+                            .clip(CircleShape)
+                            .background(Color(0xFFEEEFF4))
+                    } else {
+                        it
+                    }
+                }
                 .size(50.dp)
-                .clip(CircleShape)
-                .background(Color(0xFFEEEFF4))
                 .align(Alignment.CenterVertically)
+
         ) {
             Image(
                 painter = painterResource(id = R.drawable.profile),
@@ -101,6 +133,13 @@ fun BottomItems(
                 modifier = Modifier
                     .size(20.dp)
                     .align(Alignment.Center)
+                    .clickable(onClick = {
+                        Log.d(
+                            "TAG-Bottom-Nav",
+                            "${currentScreen.route}  CLICKED"
+                        )
+                        navController.navigateSingleTopTo(ProfileScreen.route)
+                    })
             )
         }
 

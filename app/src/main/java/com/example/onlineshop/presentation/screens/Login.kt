@@ -17,10 +17,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.onlineshop.R
+import com.example.onlineshop.presentation.navigation.AppDestination
+import com.example.onlineshop.presentation.navigation.Page1Screen
+import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
 
 @Composable
-fun Login() {
+fun Login(
+    navController: NavHostController,
+    currentScreen: AppDestination,
+) {
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.fillMaxSize()
@@ -165,7 +172,10 @@ fun Login() {
                                 contentColor = Color.White
                             ),
                             shape = RoundedCornerShape(15.dp),
-                            onClick = { Log.d("TAG-Login", "button clicked") }
+                            onClick = {
+                                Log.d("TAG-Login", "button clicked")
+                                navController.navigateSingleTopTo(Page1Screen.route)
+                            }
                         ) {
                             Text(
                                 modifier = Modifier

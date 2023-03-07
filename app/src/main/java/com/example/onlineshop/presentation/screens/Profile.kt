@@ -1,8 +1,7 @@
 package com.example.onlineshop.presentation.screens
 
 import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,40 +21,58 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.onlineshop.R
-import com.example.onlineshop.presentation.utils.BottomItems
+import com.example.onlineshop.presentation.navigation.AppDestination
+import com.example.onlineshop.presentation.navigation.Page1Screen
+import com.example.onlineshop.presentation.navigation.ProfileScreen
+import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
+import com.example.onlineshop.presentation.screens.components.BottomItems
 
 @Composable
-fun Profile() {
+fun Profile(
+    navController: NavHostController,
+    currentScreen: AppDestination,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Box(
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
             modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            IconButton(
-                onClick = { /* handle click */ },
-                modifier = Modifier.align(Alignment.TopStart)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black
-                )
-            }
-        }
-        Box(
-            contentAlignment = Alignment.TopCenter,
-            modifier = Modifier
+                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
-                .padding(top = 24.dp)
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .padding(top = 30.dp)
+                    .fillMaxWidth()
             ) {
+                IconButton(
+                    onClick = {
+                        Log.d(
+                            "TAG-Profile-Arrow",
+                            "${currentScreen.route}  CLICKED"
+                        )
+                        navController.navigateSingleTopTo(Page1Screen.route)
+                    },
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.Black,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+
                 Text(
                     text = "Profile",
                     fontFamily = FontFamily(Font(R.font.montserrat)),
@@ -63,353 +80,369 @@ fun Profile() {
                     fontSize = 15.sp,
                     lineHeight = (18.29).sp,
                     letterSpacing = (-0.3).sp,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Box {
-                    Image(
-                        painter = painterResource(id = R.drawable.black_cat),
-                        contentDescription = "avatar",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(62.dp)
-                            .clip(CircleShape)
-                    )
-                }
-                Spacer(modifier = Modifier.height(6.dp))
-                Text(
-                    text = "Change photo",
-                    fontFamily = FontFamily(Font(R.font.montserrat)),
-                    fontWeight = FontWeight.W500,
-                    fontSize = 8.sp,
-                    lineHeight = (9.75).sp,
-                    letterSpacing = (-0.3).sp,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(17.dp))
-                Text(
-                    text = "Satria Adhi Pradana",
-                    fontFamily = FontFamily(Font(R.font.montserrat)),
-                    fontWeight = FontWeight.W700,
-                    fontSize = 15.sp,
-                    lineHeight = (18.29).sp,
-                    letterSpacing = (-0.3).sp,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(36.dp))
-                Button(
-                    onClick = {
-                        Log.d("TAG=Profile", "Button: Upload item")
-                    },
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        backgroundColor = Color(0xFF4E55D7),
-                        contentColor = Color(0xFFEAEAEA)
-                    ),
-                    shape = RoundedCornerShape(15.dp),
+                    textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .width(290.dp)
-                        .height(40.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.upload),
-                            contentDescription = "avatar",
-                            modifier = Modifier
-                                .size(15.dp)
-                                .weight(1f)
-                        )
-                        Text(
-                            modifier = Modifier
-                                .weight(2f),
-                            text = "Upload item",
-                            fontFamily = FontFamily(Font(R.font.montserrat)),
-                            fontWeight = FontWeight.W600,
-                            fontSize = 14.sp,
-                            lineHeight = (17.07).sp,
-                            letterSpacing = (-0.3).sp,
-                        )
-                    }
-                }
+                        .weight(1f)
+                        .padding(end = 36.dp)
+                )
             }
-        }
+            Box(
+                contentAlignment = Alignment.TopCenter,
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 40.dp, end = 40.dp, bottom = 82.dp),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFEEEFF4))
-                            .align(Alignment.CenterVertically)
-                    ) {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Box {
                         Image(
-                            painter = painterResource(id = R.drawable.credit_card),
-                            contentDescription = "Trade store",
+                            painter = painterResource(id = R.drawable.black_cat),
+                            contentDescription = "avatar",
+                            contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center)
+                                .size(62.dp)
+                                .clip(CircleShape)
                         )
                     }
-                    Spacer(modifier = Modifier.width(6.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        text = "Trade store",
-                        modifier = Modifier
-                            .weight(1f)
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.arrow),
-                        contentDescription = "Arrow",
-                        modifier = Modifier
-                            .height(10.dp)
-                            .width(6.dp)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(25.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFEEEFF4))
-                            .align(Alignment.CenterVertically)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.credit_card),
-                            contentDescription = "Payment method",
-                            modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center)
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "Payment method",
-                        modifier = Modifier
-                            .weight(1f)
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.arrow),
-                        contentDescription = "Arrow",
-                        modifier = Modifier
-                            .height(10.dp)
-                            .width(6.dp)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(25.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFEEEFF4))
-                            .align(Alignment.CenterVertically)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.credit_card),
-                            contentDescription = "Balance",
-                            modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center)
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "Balance",
-                        modifier = Modifier
-                            .weight(1f)
-                    )
-                    Text(
-                        text = "$ 1593",
+                        text = "Change photo",
                         fontFamily = FontFamily(Font(R.font.montserrat)),
-                        fontSize = 14.sp,
                         fontWeight = FontWeight.W500,
-                        lineHeight = (17.07).sp,
+                        fontSize = 8.sp,
+                        lineHeight = (9.75).sp,
                         letterSpacing = (-0.3).sp,
                         textAlign = TextAlign.Center
                     )
+                    Spacer(modifier = Modifier.height(17.dp))
+                    Text(
+                        text = "Satria Adhi Pradana",
+                        fontFamily = FontFamily(Font(R.font.montserrat)),
+                        fontWeight = FontWeight.W700,
+                        fontSize = 15.sp,
+                        lineHeight = (18.29).sp,
+                        letterSpacing = (-0.3).sp,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(36.dp))
+                    Button(
+                        onClick = {
+                            Log.d("TAG=Profile", "Button: Upload item")
+                        },
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            backgroundColor = Color(0xFF4E55D7),
+                            contentColor = Color(0xFFEAEAEA)
+                        ),
+                        shape = RoundedCornerShape(15.dp),
+                        modifier = Modifier
+                            .width(290.dp)
+                            .height(40.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.upload),
+                                contentDescription = "avatar",
+                                modifier = Modifier
+                                    .size(15.dp)
+                                    .weight(1f)
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .weight(2f),
+                                text = "Upload item",
+                                fontFamily = FontFamily(Font(R.font.montserrat)),
+                                fontWeight = FontWeight.W600,
+                                fontSize = 14.sp,
+                                lineHeight = (17.07).sp,
+                                letterSpacing = (-0.3).sp,
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(14.dp))
+                }
+            }
 
-                }
-            }
-            Spacer(modifier = Modifier.height(25.dp))
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.TopStart
+                    .fillMaxSize()
+                    .padding(start = 40.dp, end = 40.dp, bottom = 82.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.TopStart
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFEEEFF4))
-                            .align(Alignment.CenterVertically)
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.credit_card),
-                            contentDescription = "Trade history",
+                        Box(
                             modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center)
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFFEEEFF4))
+                                .align(Alignment.CenterVertically)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.credit_card),
+                                contentDescription = "Trade store",
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "Trade store",
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.arrow),
+                            contentDescription = "Arrow",
+                            modifier = Modifier
+                                .height(10.dp)
+                                .width(6.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "Trade history",
-                        modifier = Modifier
-                            .weight(1f)
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.arrow),
-                        contentDescription = "Arrow",
-                        modifier = Modifier
-                            .height(10.dp)
-                            .width(6.dp)
-                    )
                 }
-            }
-            Spacer(modifier = Modifier.height(25.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                Spacer(modifier = Modifier.height(25.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.TopStart
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFEEEFF4))
-                            .align(Alignment.CenterVertically)
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.restore),
-                            contentDescription = "Restore purchase",
+                        Box(
                             modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center)
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFFEEEFF4))
+                                .align(Alignment.CenterVertically)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.credit_card),
+                                contentDescription = "Payment method",
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "Payment method",
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.arrow),
+                            contentDescription = "Arrow",
+                            modifier = Modifier
+                                .height(10.dp)
+                                .width(6.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "Restore Purchase",
-                        modifier = Modifier
-                            .weight(1f)
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.arrow),
-                        contentDescription = "Arrow",
-                        modifier = Modifier
-                            .height(10.dp)
-                            .width(6.dp)
-                    )
                 }
-            }
-            Spacer(modifier = Modifier.height(25.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                Spacer(modifier = Modifier.height(25.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.TopStart
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFEEEFF4))
-                            .align(Alignment.CenterVertically)
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.help),
-                            contentDescription = "Help",
+                        Box(
                             modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center)
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFFEEEFF4))
+                                .align(Alignment.CenterVertically)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.credit_card),
+                                contentDescription = "Balance",
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "Balance",
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+                        Text(
+                            text = "$ 1593",
+                            fontFamily = FontFamily(Font(R.font.montserrat)),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.W500,
+                            lineHeight = (17.07).sp,
+                            letterSpacing = (-0.3).sp,
+                            textAlign = TextAlign.Center
+                        )
+
+                    }
+                }
+                Spacer(modifier = Modifier.height(25.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.TopStart
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFFEEEFF4))
+                                .align(Alignment.CenterVertically)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.credit_card),
+                                contentDescription = "Trade history",
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "Trade history",
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.arrow),
+                            contentDescription = "Arrow",
+                            modifier = Modifier
+                                .height(10.dp)
+                                .width(6.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "Help",
-                        modifier = Modifier
-                            .weight(1f)
-                    )
                 }
-            }
-            Spacer(modifier = Modifier.height(25.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                Spacer(modifier = Modifier.height(25.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.TopStart
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFEEEFF4))
-                            .align(Alignment.CenterVertically)
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.log_out),
-                            contentDescription = "Log out",
+                        Box(
                             modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center)
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFFEEEFF4))
+                                .align(Alignment.CenterVertically)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.restore),
+                                contentDescription = "Restore purchase",
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "Restore Purchase",
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.arrow),
+                            contentDescription = "Arrow",
+                            modifier = Modifier
+                                .height(10.dp)
+                                .width(6.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "Log out",
-                        modifier = Modifier
-                            .weight(1f)
-                    )
+                }
+                Spacer(modifier = Modifier.height(25.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.TopStart
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFFEEEFF4))
+                                .align(Alignment.CenterVertically)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.help),
+                                contentDescription = "Help",
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "Help",
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(25.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.TopStart
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFFEEEFF4))
+                                .align(Alignment.CenterVertically)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.log_out),
+                                contentDescription = "Log out",
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "Log out",
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+                    }
                 }
             }
         }
@@ -420,7 +453,10 @@ fun Profile() {
                 .align(Alignment.BottomCenter)
                 .height(63.dp)
         ) {
-            BottomItems()
+            BottomItems(
+                navController = navController,
+                currentScreen = currentScreen,
+            )
         }
     }
 }
