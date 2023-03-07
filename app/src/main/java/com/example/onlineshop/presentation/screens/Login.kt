@@ -22,11 +22,13 @@ import com.example.onlineshop.R
 import com.example.onlineshop.presentation.navigation.AppDestination
 import com.example.onlineshop.presentation.navigation.Page1Screen
 import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
+import com.example.onlineshop.presentation.viewmodel.MainViewModel
 
 @Composable
 fun Login(
     navController: NavHostController,
     currentScreen: AppDestination,
+    vm: MainViewModel
 ) {
     Surface(
         color = MaterialTheme.colors.primary,

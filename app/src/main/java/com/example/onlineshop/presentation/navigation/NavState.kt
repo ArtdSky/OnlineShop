@@ -6,9 +6,12 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.onlineshop.presentation.viewmodel.MainViewModel
 
 @Composable
-fun NavState() {
+fun NavState(
+    vm: MainViewModel
+) {
 
     val navController = rememberNavController()
     val currentBackStack by navController.currentBackStackEntryAsState()
@@ -20,7 +23,8 @@ fun NavState() {
 
     NavGraph(
         navController = navController,
-        currentScreen = currentScreen
+        currentScreen = currentScreen,
+        vm =  vm
     )
 
 

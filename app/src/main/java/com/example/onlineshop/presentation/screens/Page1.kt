@@ -33,11 +33,13 @@ import com.example.onlineshop.domain.models.FlashSale
 import com.example.onlineshop.domain.models.Latest
 import com.example.onlineshop.presentation.navigation.AppDestination
 import com.example.onlineshop.presentation.screens.components.BottomItems
+import com.example.onlineshop.presentation.viewmodel.MainViewModel
 
 @Composable
 fun Page1(
     navController: NavHostController,
     currentScreen: AppDestination,
+    vm: MainViewModel
 ) {
     Box(
         modifier = Modifier

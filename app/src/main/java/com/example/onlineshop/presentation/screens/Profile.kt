@@ -28,11 +28,13 @@ import com.example.onlineshop.presentation.navigation.Page1Screen
 import com.example.onlineshop.presentation.navigation.ProfileScreen
 import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
 import com.example.onlineshop.presentation.screens.components.BottomItems
+import com.example.onlineshop.presentation.viewmodel.MainViewModel
 
 @Composable
 fun Profile(
     navController: NavHostController,
     currentScreen: AppDestination,
+    vm: MainViewModel
 ) {
     Box(
         modifier = Modifier
