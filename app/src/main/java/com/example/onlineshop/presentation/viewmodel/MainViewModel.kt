@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.onlineshop.data.network.Api.retrofitApiService
 import com.example.onlineshop.data.network.models.FlashSaleData
+import com.example.onlineshop.data.network.models.LatestData
 import com.example.onlineshop.presentation.models.FlashSale
 import com.example.onlineshop.presentation.models.Latest
 import com.example.onlineshop.presentation.state.ViewState
@@ -22,7 +23,7 @@ class MainViewModel : ViewModel() {
     )
     val viewState = _viewState.asStateFlow()
 
-    fun getData() {
+    fun getStaticData() {
         viewModelScope.launch {
             _viewState.update { currentState ->
                 currentState.copy(
@@ -75,19 +76,22 @@ class MainViewModel : ViewModel() {
 
     fun getNetData() {
         viewModelScope.launch {
-            val result = retrofitApiService.getFlashSales()
-            Log.d("TAG-VM", result.toString())
-            val flashSales = mapToPresentation(result)
+            val loadFlashData = retrofitApiService.getFlashSales()
+            val loadLatestData = retrofitApiService.getLatestSales()
+            Log.d("TAG-VM", loadLatestData.toString())
+            val flashSales = mapFlashSales(loadFlashData)
+            val latest = mapLatest(loadLatestData)
 
             _viewState.update { currentState ->
                 currentState.copy(
-                    flashSales = flashSales
+                    flashSales = flashSales,
+                    latest = latest
                 )
             }
         }
     }
 
-    fun mapToPresentation(flashSalesData: FlashSaleData): List<FlashSale> {
+    fun mapFlashSales(flashSalesData: FlashSaleData): List<FlashSale> {
         val listFlashSales: MutableList<FlashSale> = mutableListOf()
         flashSalesData.flashSale.forEach { flashSale ->
             val presentationFlashSale = FlashSale(
@@ -100,5 +104,19 @@ class MainViewModel : ViewModel() {
             listFlashSales.add(presentationFlashSale)
         }
         return listFlashSales
+    }
+
+    fun mapLatest(latestData: LatestData): List<Latest> {
+        val listLatest: MutableList<Latest> = mutableListOf()
+        latestData.latest.forEach { last ->
+            val presentationLatest = Latest(
+                last.category,
+                last.name,
+                last.price?.toDouble(),
+                last.imageUrl
+            )
+            listLatest.add(presentationLatest)
+        }
+        return listLatest
     }
 }

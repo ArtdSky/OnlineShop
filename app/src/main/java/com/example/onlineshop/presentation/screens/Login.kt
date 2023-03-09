@@ -30,7 +30,7 @@ fun Login(
     currentScreen: AppDestination,
     vm: MainViewModel
 ) {
-    vm.getNetData()
+
 
     Surface(
         color = MaterialTheme.colors.primary,

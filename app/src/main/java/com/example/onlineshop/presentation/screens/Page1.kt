@@ -39,7 +39,7 @@ fun Page1(
     currentScreen: AppDestination,
     vm: MainViewModel
 ) {
-    vm.getData()
+    vm.getNetData()
     val state by vm.viewState.collectAsState()
 
 
@@ -456,31 +456,35 @@ fun Page1(
                                     .width(75.dp)
                                     .padding(start = 7.dp)
                             ) {
-                                Text(
-                                    text = latest[it].category,
-                                    fontFamily = FontFamily(Font(R.font.poppins)),
-                                    fontWeight = FontWeight.W600,
-                                    fontSize = 6.sp,
-                                    letterSpacing = (-0.3).sp,
-                                    lineHeight = (9).sp,
-                                    color = Color(0xFF070604),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(9.dp))
-                                        .width(35.dp)
-                                        .height(12.dp)
-                                        .background(Color(0xFFc4c4c4))
-                                )
-                                Text(
-                                    text = latest[it].name,
-                                    fontFamily = FontFamily(Font(R.font.poppins)),
-                                    fontWeight = FontWeight.W600,
-                                    fontSize = 9.sp,
-                                    letterSpacing = (-0.3).sp,
-                                    lineHeight = (13.5).sp,
-                                    color = Color(0xFFFFFFFF),
-                                    modifier = Modifier.padding(top = 4.dp)
-                                )
+                                latest[it].category?.let { latestCategoty ->
+                                    Text(
+                                        text = latestCategoty,
+                                        fontFamily = FontFamily(Font(R.font.poppins)),
+                                        fontWeight = FontWeight.W600,
+                                        fontSize = 6.sp,
+                                        letterSpacing = (-0.3).sp,
+                                        lineHeight = (9).sp,
+                                        color = Color(0xFF070604),
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(9.dp))
+                                            .width(35.dp)
+                                            .height(12.dp)
+                                            .background(Color(0xFFc4c4c4))
+                                    )
+                                }
+                                latest[it].name?.let { latestName ->
+                                    Text(
+                                        text = latestName,
+                                        fontFamily = FontFamily(Font(R.font.poppins)),
+                                        fontWeight = FontWeight.W600,
+                                        fontSize = 9.sp,
+                                        letterSpacing = (-0.3).sp,
+                                        lineHeight = (13.5).sp,
+                                        color = Color(0xFFFFFFFF),
+                                        modifier = Modifier.padding(top = 4.dp)
+                                    )
+                                }
                                 Text(
                                     text = "$ ${latest[it].price}",
                                     fontFamily = FontFamily(Font(R.font.poppins)),
@@ -623,31 +627,35 @@ fun Page1(
                                     .width(87.dp)
                                     .padding(start = 10.dp)
                             ) {
-                                Text(
-                                    text = flashSales[it].category,
-                                    fontFamily = FontFamily(Font(R.font.poppins)),
-                                    fontWeight = FontWeight.W600,
-                                    fontSize = 9.sp,
-                                    letterSpacing = (-0.3).sp,
-                                    lineHeight = (13.5).sp,
-                                    color = Color(0xFF070604),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(9.dp))
-                                        .width(49.dp)
-                                        .height(17.dp)
-                                        .background(Color(0xFFc4c4c4))
-                                )
-                                Text(
-                                    text = flashSales[it].name,
-                                    fontFamily = FontFamily(Font(R.font.poppins)),
-                                    fontWeight = FontWeight.W600,
-                                    fontSize = 13.sp,
-                                    letterSpacing = (-0.3).sp,
-                                    lineHeight = (19.5).sp,
-                                    color = Color(0xFFFFFFFF),
-                                    modifier = Modifier.padding(top = 6.dp)
-                                )
+                                flashSales[it].category?.let { flashSale ->
+                                    Text(
+                                        text = flashSale,
+                                        fontFamily = FontFamily(Font(R.font.poppins)),
+                                        fontWeight = FontWeight.W600,
+                                        fontSize = 9.sp,
+                                        letterSpacing = (-0.3).sp,
+                                        lineHeight = (13.5).sp,
+                                        color = Color(0xFF070604),
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(9.dp))
+                                            .width(49.dp)
+                                            .height(17.dp)
+                                            .background(Color(0xFFc4c4c4))
+                                    )
+                                }
+                                flashSales[it].name?.let { flashSale ->
+                                    Text(
+                                        text = flashSale,
+                                        fontFamily = FontFamily(Font(R.font.poppins)),
+                                        fontWeight = FontWeight.W600,
+                                        fontSize = 13.sp,
+                                        letterSpacing = (-0.3).sp,
+                                        lineHeight = (19.5).sp,
+                                        color = Color(0xFFFFFFFF),
+                                        modifier = Modifier.padding(top = 6.dp)
+                                    )
+                                }
                                 Text(
                                     text = "$ ${flashSales[it].price}",
                                     fontFamily = FontFamily(Font(R.font.poppins)),
