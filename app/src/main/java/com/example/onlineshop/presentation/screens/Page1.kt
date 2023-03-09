@@ -39,7 +39,7 @@ fun Page1(
     currentScreen: AppDestination,
     vm: MainViewModel
 ) {
-    vm.getNetData()
+    vm.loadData()
     val state by vm.viewState.collectAsState()
 
 

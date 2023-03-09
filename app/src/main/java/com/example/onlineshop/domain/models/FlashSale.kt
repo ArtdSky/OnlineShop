@@ -1,4 +1,4 @@
-package com.example.onlineshop.presentation.models
+package com.example.onlineshop.domain.models
 
 data class FlashSale (
     val category : String? = null,
