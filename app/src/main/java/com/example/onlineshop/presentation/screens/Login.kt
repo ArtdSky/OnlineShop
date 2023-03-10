@@ -1,7 +1,6 @@
 package com.example.onlineshop.presentation.screens
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -11,10 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,7 +24,6 @@ import com.example.onlineshop.presentation.navigation.AppDestination
 import com.example.onlineshop.presentation.navigation.Page1Screen
 import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
 import com.example.onlineshop.presentation.viewmodel.MainViewModel
-import java.util.*
 
 @Composable
 fun Login(
@@ -47,7 +46,7 @@ fun Login(
     ) {
         var firstName by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
-
+        var showPassword by remember { mutableStateOf(false) }
 
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -128,16 +127,11 @@ fun Login(
                             .fillMaxWidth(),
                         shape = RoundedCornerShape(15.dp),
                         placeholder = {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
+
                                 Text(
                                     modifier = Modifier
-                                        .padding(vertical = 2.dp)
-                                        .weight(1f),
+                                        .fillMaxSize()
+                                        .padding(start = 30.dp),
                                     text = "Password",
                                     fontFamily = FontFamily(
                                         Font(
@@ -150,21 +144,28 @@ fun Login(
                                     lineHeight = 13.sp,
                                     textAlign = TextAlign.Center,
                                     letterSpacing = (-0.3).sp,
-                                    color = Color(0xFF7B7B7B)
+                                    color = Color(0xFF7B7B7B),
                                 )
-                                Image(
-                                    painter = painterResource(id = R.drawable.eye_of),
-                                    contentDescription = "SVG image",
-                                    modifier = Modifier.size(15.dp)
-                                )
-                            }
+
 
                         },
                         colors = TextFieldDefaults.textFieldColors(
                             unfocusedIndicatorColor = Color.Transparent,
                             backgroundColor = Color(0xFFE8E8E8)
                         ),
-                        textStyle = textStyle
+                        textStyle = textStyle,
+                        visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                        trailingIcon = {
+                            IconButton(
+                                onClick = { showPassword = !showPassword },
+                                content = {
+                                    Icon(
+                                        painter = painterResource(id = if (showPassword) R.drawable.eye_visible else R.drawable.eye_hidden),
+                                        contentDescription = if (showPassword) "Hide password" else "Show password"
+                                    )
+                                }
+                            )
+                        }
                     )
                 }
 
