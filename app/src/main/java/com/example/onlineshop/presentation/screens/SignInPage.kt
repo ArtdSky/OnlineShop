@@ -24,6 +24,7 @@ import com.example.onlineshop.presentation.navigation.AppDestination
 import com.example.onlineshop.presentation.navigation.LoginScreen
 import com.example.onlineshop.presentation.navigation.Page1Screen
 import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
+import com.example.onlineshop.presentation.utils.isValidEmail
 import com.example.onlineshop.presentation.viewmodel.MainViewModel
 
 
@@ -33,7 +34,15 @@ fun SignInPage(
     currentScreen: AppDestination,
     vm: MainViewModel
 ) {
+    val state by vm.viewState.collectAsState()
 
+    var isSignIn by remember { mutableStateOf(false) }
+
+    LaunchedEffect(isSignIn) {
+        if (isSignIn) {
+            navController.navigateSingleTopTo(Page1Screen.route)
+        }
+    }
 
     Surface(
         color = MaterialTheme.colors.primary,
@@ -191,9 +200,19 @@ fun SignInPage(
                             ),
                             shape = RoundedCornerShape(15.dp),
                             onClick = {
-                                Log.d("TAG-SignIn", "firstName = $firstName, lastName = $lastName, email = $email")
-//                                vm.signIn()
-                                navController.navigateSingleTopTo(Page1Screen.route)
+                                if (isValidEmail(email)) {
+                                    Log.d("TAG-SignIn", "email = $email IS VALID EMAIL")
+                                    val name =
+                                        firstName.lowercase().replaceFirstChar { it.uppercase() }
+                                    vm.signIn(
+                                        first_name = name,
+                                        last_name = lastName,
+                                        email = email
+                                    )
+                                    isSignIn = true
+                                } else {
+                                    Log.d("TAG-SignIn", "email = $email THIS IS NOT VALID EMAIL")
+                                }
                             }
                         ) {
                             Text(
@@ -262,7 +281,7 @@ fun SignInPage(
                             )
                             Spacer(modifier = Modifier.width(13.dp))
                             Text(
-                                text ="Sign in with Google",
+                                text = "Sign in with Google",
                                 fontFamily = FontFamily(Font(R.font.montserrat, FontWeight.Normal)),
                                 fontWeight = FontWeight.W500,
                                 fontSize = 12.sp,

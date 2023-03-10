@@ -186,8 +186,8 @@ fun Login(
                             shape = RoundedCornerShape(15.dp),
                             onClick = {
                                 Log.d("TAG-Login", "firstName = $firstName, password = $password")
-                                firstName.replaceFirstChar{ it.uppercase() }
-                                vm.logIn(firstName)
+                                val result = firstName.lowercase().replaceFirstChar{ it.uppercase() }
+                                vm.logIn(result)
                             }
                         ) {
                             Text(
