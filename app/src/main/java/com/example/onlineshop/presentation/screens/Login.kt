@@ -178,6 +178,7 @@ fun Login(
                             shape = RoundedCornerShape(15.dp),
                             onClick = {
                                 Log.d("TAG-Login", "button clicked")
+                                vm.logIn()
                                 navController.navigateSingleTopTo(Page1Screen.route)
                             }
                         ) {

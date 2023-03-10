@@ -33,6 +33,8 @@ fun SignInPage(
     currentScreen: AppDestination,
     vm: MainViewModel
 ) {
+
+
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.fillMaxSize()
@@ -190,6 +192,7 @@ fun SignInPage(
                             shape = RoundedCornerShape(15.dp),
                             onClick = {
                                 Log.d("TAG-SignIn", "button clicked")
+                                vm.signIn()
                                 navController.navigateSingleTopTo(Page1Screen.route)
                             }
                         ) {
