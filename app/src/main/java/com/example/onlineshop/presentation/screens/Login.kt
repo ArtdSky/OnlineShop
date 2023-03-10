@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +24,7 @@ import com.example.onlineshop.presentation.navigation.AppDestination
 import com.example.onlineshop.presentation.navigation.Page1Screen
 import com.example.onlineshop.presentation.navigation.navigateSingleTopTo
 import com.example.onlineshop.presentation.viewmodel.MainViewModel
+import java.util.*
 
 @Composable
 fun Login(
@@ -31,14 +33,20 @@ fun Login(
     vm: MainViewModel
 ) {
 
+    val state by vm.viewState.collectAsState()
+
+    LaunchedEffect(state.isLogged) {
+        if (state.isLogged) {
+            navController.navigateSingleTopTo(Page1Screen.route)
+        }
+    }
 
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.fillMaxSize()
     ) {
         var firstName by remember { mutableStateOf("") }
-        var lastName by remember { mutableStateOf("") }
-        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
 
 
         Box(
@@ -113,8 +121,8 @@ fun Login(
                     )
                     Spacer(modifier = Modifier.height(30.dp))
                     TextField(
-                        value = lastName,
-                        onValueChange = { lastName = it },
+                        value = password,
+                        onValueChange = { password = it },
                         modifier = Modifier
                             .height(50.dp)
                             .fillMaxWidth(),
@@ -177,9 +185,9 @@ fun Login(
                             ),
                             shape = RoundedCornerShape(15.dp),
                             onClick = {
-                                Log.d("TAG-Login", "button clicked")
-                                vm.logIn()
-                                navController.navigateSingleTopTo(Page1Screen.route)
+                                Log.d("TAG-Login", "firstName = $firstName, password = $password")
+                                firstName.replaceFirstChar{ it.uppercase() }
+                                vm.logIn(firstName)
                             }
                         ) {
                             Text(

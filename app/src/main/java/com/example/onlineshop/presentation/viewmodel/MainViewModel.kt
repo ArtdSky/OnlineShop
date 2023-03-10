@@ -11,6 +11,7 @@ import com.example.onlineshop.domain.usecase.GetLatestUseCase
 import com.example.onlineshop.domain.usecase.GetUserByNameUseCase
 import com.example.onlineshop.domain.usecase.InsertUserUseCase
 import com.example.onlineshop.presentation.state.ViewState
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -36,7 +37,7 @@ class MainViewModel(
 
             val flashSales = getFlashSalesUseCase()
             val latest = getLatestUseCase()
-            Log.d("VM-latest", "$latest")
+
             _viewState.update { currentState ->
                 currentState.copy(
                     flashSales = flashSales,
@@ -58,13 +59,29 @@ class MainViewModel(
         }
     }
 
-    fun logIn() {
+        fun logIn(name : String) {
         viewModelScope.launch {
-            getUserByNameUseCase(
-                name = "Test"
+            val result = getUserByNameUseCase(
+                name = name
             )
+            if(result == null){
+                _viewState.update { currentState ->
+                    currentState.copy(
+                        isLogged = false,
+                    )
+                }
+                Log.d("TAG-VM","FAIL, USER IS NOT FOUND")
+            } else {
+                _viewState.update { currentState ->
+                    currentState.copy(
+                        isLogged = true,
+                    )
+                }
+                Log.d("TAG-VM","SUCCESS LOGIN")
+            }
         }
     }
+
 
 
 }

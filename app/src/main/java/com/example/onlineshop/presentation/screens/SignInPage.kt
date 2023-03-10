@@ -191,8 +191,8 @@ fun SignInPage(
                             ),
                             shape = RoundedCornerShape(15.dp),
                             onClick = {
-                                Log.d("TAG-SignIn", "button clicked")
-                                vm.signIn()
+                                Log.d("TAG-SignIn", "firstName = $firstName, lastName = $lastName, email = $email")
+//                                vm.signIn()
                                 navController.navigateSingleTopTo(Page1Screen.route)
                             }
                         ) {
